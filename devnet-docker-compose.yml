@@ -1,0 +1,57 @@
+version: '3'
+
+networks:
+  seedNet:
+    ipam:
+      config:
+        - subnet: 172.26.0.0/24
+
+services:
+
+  dfs-seed-node-1:
+    stdin_open: true
+    tty: true
+    hostname: dfs-seed-node-1
+    image: catalyst.network/catalyst.dfs.seednode:latest
+    ports:
+      - 4001
+      - 5001
+    networks:
+      seedNet:
+        ipv4_address: 172.26.0.110
+        
+  dfs-seed-node-2:
+    stdin_open: true
+    tty: true
+    hostname: dfs-seed-node-2
+    image: catalyst.network/catalyst.dfs.seednode:latest
+    ports:
+      - 4001
+      - 5001
+    networks:
+      seedNet:
+        ipv4_address: 172.26.0.120
+        
+  dfs-seed-node-3:
+    stdin_open: true
+    tty: true
+    hostname: dfs-seed-node-3
+    image: catalyst.network/catalyst.dfs.seednode:latest
+    ports:
+      - 4001
+      - 5001
+    networks:
+      seedNet:
+        ipv4_address: 172.26.0.130
+          
+  dfs-seed-node-4:
+    stdin_open: true
+    tty: true
+    hostname: dfs-seed-node-4
+    image: catalyst.network/catalyst.dfs.seednode:latest
+    ports:
+      - 4001
+      - 5001
+    networks:
+      seedNet:
+        ipv4_address: 172.26.0.140
