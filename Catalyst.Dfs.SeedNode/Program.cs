@@ -45,7 +45,7 @@ namespace Catalyst.Dfs.SeedNode
     class Options
     {
         [Option('p', "ipfs-password", HelpText = "The password for IPFS.  Defaults to prompting for the password.")]
-        public string IpfsPassword { get; private set; }
+        public string IpfsPassword { get; set; }
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ namespace Catalyst.Dfs.SeedNode
         public static int Main(string[] args)
         {
             // Parse the arguments.
-            Parser.Default
+            CommandLine.Parser.Default
                 .ParseArguments<Options>(args)
                 .WithParsed(Run);
 
@@ -123,7 +123,7 @@ namespace Catalyst.Dfs.SeedNode
                 var container = containerBuilder.Build();
                 
                 // Process options that need a container.
-                if (!string.IsNullOrWhiteSpace(options.IpfsPassword))
+                if (!String.IsNullOrWhiteSpace(options.IpfsPassword))
                 {
                     var passwordRegistry = container.Resolve<IPasswordRegistry>();
                     var pwd = new SecureString();

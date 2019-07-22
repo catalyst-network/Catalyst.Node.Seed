@@ -22,7 +22,6 @@
 #endregion
 
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Catalyst.Common.Interfaces;
@@ -47,12 +46,12 @@ namespace Catalyst.Dfs.SeedNode
 
         public async Task RunAsync(CancellationToken ct)
         {
-            var peer = await _ipfs.Generic.IdAsync(cancel: ct);
+            var peer = await _ipfs.Generic.IdAsync();
             _logger.Information($"seed node {peer.Id}");
-            peer.Addresses.ToList().ForEach(addr =>
+            foreach (var addr in peer.Addresses)
             {
                 _logger.Information($"  listening on {addr}");
-            });
+            }
 
             bool exit;
             do
