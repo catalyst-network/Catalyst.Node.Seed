@@ -31,6 +31,7 @@ using Autofac.Configuration;
 using Autofac.Extensions.DependencyInjection;
 using AutofacSerilogIntegration;
 using Catalyst.Common.Config;
+using Catalyst.Common.Kernel;
 using Catalyst.Common.FileSystem;
 using Catalyst.Common.Interfaces;
 using Catalyst.Common.Interfaces.Registry;
@@ -57,77 +58,42 @@ namespace Catalyst.Dfs.SeedNode
     /// </remarks>
     internal static class Program
     {
-        private static ILogger _logger;
-        private static readonly string LogFileName = "Catalyst.SeedNode..log";
 
+        private static readonly Kernel Kernel;
+        private static Options _options;
+
+        static Program()
+        {
+            Kernel = Kernel.Initramfs(default, "Catalyst.SeedNode..log");
+            
+            AppDomain.CurrentDomain.UnhandledException += Kernel.LogUnhandledException;
+            AppDomain.CurrentDomain.ProcessExit += Kernel.CurrentDomain_ProcessExit;
+        }
+        
         public static int Main(string[] args)
         {
+            
             // Parse the arguments.
-            CommandLine.Parser.Default
+            Parser.Default
                 .ParseArguments<Options>(args)
                 .WithParsed(Run);
 
             return Environment.ExitCode;
         }
 
-        static void Run(Options options)
+        private static void CustomBootLogic(Kernel kernel)
         {
-            var declaringType = MethodBase.GetCurrentMethod().DeclaringType;
-            var lifetimeTag = declaringType.AssemblyQualifiedName;
-            _logger = ConsoleProgram.GetTempLogger(LogFileName, declaringType);
-
-            AppDomain.CurrentDomain.UnhandledException +=
-                (sender, args) => ConsoleProgram.LogUnhandledException(_logger, sender, args);
-
-            _logger.Information("Catalyst.SeedNode started with process id {0}",
-                System.Diagnostics.Process.GetCurrentProcess().Id.ToString());
-
-            var cts = new CancellationTokenSource();
-            try
+            
+            using (var instance = kernel.ContainerBuilder.Build().BeginLifetimeScope(MethodBase.GetCurrentMethod().DeclaringType.AssemblyQualifiedName))
             {
-                var targetConfigFolder = new FileSystem().GetCatalystDataDir().FullName;
-                var network = Network.Dev;
-
-#if (DEBUG)                
-                new SeedNodeConfigCopier().RunConfigStartUp(targetConfigFolder, network, overwrite: true);
-#elif (RELEASE)
-                new SeedNodeConfigCopier().RunConfigStartUp(targetConfigFolder, network);
-#endif
-
-                var config = new ConfigurationBuilder()
-                   .AddJsonFile(Path.Combine(targetConfigFolder, Constants.NetworkConfigFile(network)))
-                   .AddJsonFile(Path.Combine(targetConfigFolder, Constants.SerilogJsonConfigFile))
-                   .AddJsonFile(Path.Combine(targetConfigFolder, "seed.components.json"))
-                   .Build();
-
-                //.Net Core service collection
-                var serviceCollection = new ServiceCollection();
-
-                // register components from config file
-                var configurationModule = new ConfigurationModule(config);
-                var containerBuilder = new ContainerBuilder();
-                containerBuilder.RegisterModule(configurationModule);
-
-                var loggerConfiguration =
-                    new LoggerConfiguration().ReadFrom.Configuration(configurationModule.Configuration);
-
-                _logger = loggerConfiguration.WriteTo
-                   .File(Path.Combine(targetConfigFolder, LogFileName),
-                        rollingInterval: RollingInterval.Day,
-                        outputTemplate: "{Timestamp:HH:mm:ss} [{Level:u3}] ({MachineName}/{ThreadId}) {Message} ({SourceContext}){NewLine}{Exception}")
-                   .CreateLogger().ForContext(declaringType);
-
-                containerBuilder.RegisterLogger(_logger);
-                containerBuilder.RegisterInstance(config);
-
-                var container = containerBuilder.Build();
-                
                 // Process options that need a container.
-                if (!String.IsNullOrWhiteSpace(options.IpfsPassword))
+                if (!String.IsNullOrWhiteSpace(_options.IpfsPassword))
                 {
-                    var passwordRegistry = container.Resolve<IPasswordRegistry>();
+                    Kernel.ContainerBuilder.Build();
+                    var passwordRegistry = instance.Resolve<IPasswordRegistry>();
                     var pwd = new SecureString();
-                    foreach (var c in options.IpfsPassword)
+                    
+                    foreach (var c in _options.IpfsPassword)
                     {
                         pwd.AppendChar(c);
                     }
@@ -135,20 +101,31 @@ namespace Catalyst.Dfs.SeedNode
                 }
 
                 // Start the app.
-                using (container.BeginLifetimeScope(lifetimeTag,
+                var node = instance.Resolve<ICatalystNode>();
+                    
+                node.RunAsync(kernel.CancellationTokenProvider.CancellationTokenSource.Token)
+                    .Wait(kernel.CancellationTokenProvider.CancellationTokenSource.Token);
+            }
+        }
 
-                    //Add .Net Core serviceCollection to the Autofac container.
-                    b => { b.Populate(serviceCollection, lifetimeTag); }))
-                {
-                    var node = container.Resolve<ICatalystNode>();
-                    node.RunAsync(cts.Token).Wait(cts.Token);
-                }
+        private static void Run(Options options)
+        {
+            _options = options;
+            
+            try {
+
+                Kernel.WithDataDirectory()
+                    .WithSerilogConfigFile()
+                    .WithConfigCopier(new SeedNodeConfigCopier())
+                    .WithConfigurationFile("seed.components.json")
+                    .BuildKernel()
+                    .StartCustom(CustomBootLogic);
 
                 Environment.ExitCode = 0;
             }
             catch (Exception e)
             {
-                _logger.Fatal(e, "Catalyst.SeedNode stopped unexpectedly");
+                Kernel.Logger.Fatal(e, "Catalyst.SeedNode stopped unexpectedly");
                 Environment.ExitCode = 1;
             }
         }
