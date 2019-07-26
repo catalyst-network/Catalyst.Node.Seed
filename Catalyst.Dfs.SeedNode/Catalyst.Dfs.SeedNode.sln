@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29123.88
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalyst.Dfs.SeedNode", "Catalyst.Dfs.SeedNode.csproj", "{9376F5C3-3F3D-41FF-AC42-3E98847DB1B1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DnsSpike", "..\DnsSpike\DnsSpike.csproj", "{C4D751B7-DBF7-4C45-8D54-1FF6608E4EF6}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalyst.Common", "..\Catalyst.Node\src\Catalyst.Common\Catalyst.Common.csproj", "{7251EBED-443A-43C0-92CF-4A7D36ECBE55}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalyst.Core.Lib", "..\Catalyst.Node\src\Catalyst.Core.Lib\Catalyst.Core.Lib.csproj", "{61942552-9BF5-4B72-AACB-79E34099CF65}"

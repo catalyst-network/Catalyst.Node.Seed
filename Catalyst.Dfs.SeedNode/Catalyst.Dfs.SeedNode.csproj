@@ -78,6 +78,9 @@
       <Content Include="..\testnet-docker-compose.yml">
         <Link>testnet-docker-compose.yml</Link>
       </Content>
+      <Content Include="..\Vagrantfile">
+        <Link>Vagrantfile</Link>
+      </Content>
     </ItemGroup>
 
 </Project>

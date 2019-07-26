@@ -16,6 +16,7 @@ RUN dotnet publish Catalyst.Dfs.SeedNode/Catalyst.Dfs.SeedNode.csproj -c Debug -
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2
+RUN apt update -y; apt-get install dnsutils lsof -y
 WORKDIR /app
 COPY --from=build-env /app/Catalyst.Dfs.SeedNode/output .
 CMD ["dotnet", "Catalyst.Dfs.SeedNode.dll", "--ipfs-password", "test"]
