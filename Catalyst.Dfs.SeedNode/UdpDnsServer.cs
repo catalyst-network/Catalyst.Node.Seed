@@ -63,7 +63,7 @@ namespace Catalyst.Dfs.SeedNode
         /// <value>
         ///   Defaults to 53.
         /// </value>
-        public int Port { get; set; } = 53;
+        public int Port { get; set; } = 5333;
 
         /// <summary>
         ///   Start the DNS server.
