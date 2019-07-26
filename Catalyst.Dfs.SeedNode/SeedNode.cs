@@ -22,37 +22,52 @@
 #endregion
 
 using System;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Catalyst.Common.Interfaces;
+using Catalyst.Common.Interfaces.FileSystem;
 using Ipfs.CoreApi;
 using Serilog;
 
 namespace Catalyst.Dfs.SeedNode
 {
+    /// <summary>
+    ///   An IPFS seed node.
+    /// </summary>
     public class SeedNode
         : ICatalystNode
     {
         private readonly ILogger _logger;
         private readonly ICoreApi _ipfs;
+        private readonly IFileSystem _fileSystem;
 
         public SeedNode(
             ICoreApi ipfs,
+            IFileSystem fileSystem,
             ILogger logger)
         {
             _ipfs = ipfs;
+            _fileSystem = fileSystem;
             _logger = logger;
         }
 
         public async Task RunAsync(CancellationToken ct)
         {
+            // Start the DNS server.
+            var zone = Path.Combine(_fileSystem.GetCatalystDataDir().FullName, "seed.zone");
+            var dns = new UdpDnsServer(zone);
+            dns.Start();
+
+            // Start the IPFS seed node, which is just a normal IPFS peer node.;
             var peer = await _ipfs.Generic.IdAsync();
             _logger.Information($"seed node {peer.Id}");
             foreach (var addr in peer.Addresses)
             {
-                _logger.Information($"  listening on {addr}");
+                _logger.Information($"  listening on {addr.WithoutPeerId()}");
             }
 
+            // Wait for a user commanded exit.
             bool exit;
             do
             {
