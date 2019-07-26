@@ -24,6 +24,7 @@
         <PackageReference Include="CommandLineParser" Version="2.5.0" />
         <PackageReference Include="Common.Logging.Serilog" Version="4.3.6" />
         <PackageReference Include="Ipfs.Engine" Version="0.11.1" />
+        <PackageReference Include="Makaretu.Dns" Version="2.0.1" />
         <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="2.2.0" />
@@ -44,6 +45,9 @@
     </ItemGroup>
 
     <ItemGroup>
+        <None Update="Config\seed.zone">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
         <None Update="Config\devnet.json">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>

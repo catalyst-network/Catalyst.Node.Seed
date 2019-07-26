@@ -1,0 +1,7 @@
+﻿;
+; The DNS master file for seed nodes in the Catalyst network
+;
+$ORIGIN seed.catalystnetwork.
+$TTL 1 ; 1 second for testing
+@ A     127.0.0.1
+  TXT   peer=0x41437c30317c39322e3230372e337382e3139387c34323036397c3031323334353637383930313233343536373839323232323232323232323232

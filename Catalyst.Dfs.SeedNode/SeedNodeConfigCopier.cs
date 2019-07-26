@@ -35,7 +35,8 @@ namespace Catalyst.Dfs.SeedNode
             {
                 Constants.SerilogJsonConfigFile,
                 Constants.NetworkConfigFile(network),
-                "seed.components.json"
+                "seed.components.json",
+                "seed.zone"
             };
         }
     }
