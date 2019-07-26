@@ -89,7 +89,6 @@ namespace Catalyst.Dfs.SeedNode
                 // Process options that need a container.
                 if (!String.IsNullOrWhiteSpace(_options.IpfsPassword))
                 {
-                    Kernel.ContainerBuilder.Build();
                     var passwordRegistry = instance.Resolve<IPasswordRegistry>();
                     var pwd = new SecureString();
                     
