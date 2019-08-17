@@ -32,6 +32,7 @@ using Autofac.Extensions.DependencyInjection;
 using AutofacSerilogIntegration;
 using Catalyst.Common.Config;
 using Catalyst.Common.Kernel;
+using Catalyst.Common.Types;
 using Catalyst.Common.FileSystem;
 using Catalyst.Common.Interfaces;
 using Catalyst.Common.Interfaces.Registry;
@@ -47,6 +48,10 @@ namespace Catalyst.Dfs.SeedNode
     {
         [Option('p', "ipfs-password", HelpText = "The password for IPFS.  Defaults to prompting for the password.")]
         public string IpfsPassword { get; set; }
+
+        [Option('o', "overwrite-config", HelpText = "Overwrite the data directory configs.")]
+        public bool OverwriteConfig { get; set; }
+
     }
 
     /// <summary>
@@ -81,32 +86,6 @@ namespace Catalyst.Dfs.SeedNode
             return Environment.ExitCode;
         }
 
-        private static void CustomBootLogic(Kernel kernel)
-        {
-            
-            using (var instance = kernel.ContainerBuilder.Build().BeginLifetimeScope(MethodBase.GetCurrentMethod().DeclaringType.AssemblyQualifiedName))
-            {
-                // Process options that need a container.
-                if (!String.IsNullOrWhiteSpace(_options.IpfsPassword))
-                {
-                    var passwordRegistry = instance.Resolve<IPasswordRegistry>();
-                    var pwd = new SecureString();
-                    
-                    foreach (var c in _options.IpfsPassword)
-                    {
-                        pwd.AppendChar(c);
-                    }
-                    passwordRegistry.AddItemToRegistry(PasswordRegistryKey.IpfsPassword, pwd);
-                }
-
-                // Start the app.
-                var node = instance.Resolve<ICatalystNode>();
-                    
-                node.RunAsync(kernel.CancellationTokenProvider.CancellationTokenSource.Token)
-                    .Wait(kernel.CancellationTokenProvider.CancellationTokenSource.Token);
-            }
-        }
-
         private static void Run(Options options)
         {
             _options = options;
@@ -117,8 +96,9 @@ namespace Catalyst.Dfs.SeedNode
                     .WithSerilogConfigFile()
                     .WithConfigCopier(new SeedNodeConfigCopier())
                     .WithConfigurationFile("seed.components.json")
-                    .BuildKernel()
-                    .StartCustom(CustomBootLogic);
+                    .BuildKernel(options.OverwriteConfig)
+                    .WithPassword(PasswordRegistryTypes.IpfsPassword, options.IpfsPassword)
+                    .StartNode();
 
                 Environment.ExitCode = 0;
             }

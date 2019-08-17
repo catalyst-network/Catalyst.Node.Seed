@@ -22,6 +22,7 @@
 #endregion
 
 using System.Collections.Generic;
+using Catalyst.Common.Types;
 using Catalyst.Common.Config;
 
 namespace Catalyst.Dfs.SeedNode
@@ -29,12 +30,12 @@ namespace Catalyst.Dfs.SeedNode
     public sealed class SeedNodeConfigCopier
         : ConfigCopier
     {
-        protected override IEnumerable<string> RequiredConfigFiles(Network network)
+        protected override IEnumerable<string> RequiredConfigFiles(NetworkTypes networkTypes)
         {
             return new[]
             {
                 Constants.SerilogJsonConfigFile,
-                Constants.NetworkConfigFile(network),
+                Constants.NetworkConfigFile(networkTypes),
                 "seed.components.json",
                 "seed.zone"
             };

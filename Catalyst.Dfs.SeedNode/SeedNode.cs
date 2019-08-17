@@ -27,6 +27,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Catalyst.Common.Interfaces;
 using Catalyst.Common.Interfaces.FileSystem;
+using Catalyst.Common.Interfaces.Modules.Consensus;
 using Ipfs.CoreApi;
 using Serilog;
 
@@ -52,6 +53,8 @@ namespace Catalyst.Dfs.SeedNode
             _logger = logger;
         }
 
+        public IConsensus Consensus => null;
+
         public async Task RunAsync(CancellationToken ct)
         {
             // Start the DNS server.
@@ -76,6 +79,11 @@ namespace Catalyst.Dfs.SeedNode
             } while (!ct.IsCancellationRequested && !exit);
 
             _logger.Information("Stopping the seed node");
+        }
+
+        public Task StartSockets()
+        {
+            return Task.CompletedTask;
         }
     }
 }
