@@ -39,8 +39,8 @@
 
 
     <ItemGroup>
-        <ProjectReference Include="..\Catalyst.Node/src/Catalyst.Common\Catalyst.Common.csproj" />
         <ProjectReference Include="..\Catalyst.Node/src/Catalyst.Core.Lib\Catalyst.Core.Lib.csproj" />
+        <ProjectReference Include="..\Catalyst.Node\src\Catalyst.Core.Modules.Dfs\Catalyst.Core.Modules.Dfs.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -54,9 +54,6 @@
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
         <None Update="Config\serilog.json">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>
-        <None Update="Config\seed.components.json">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
         <None Update="Config\testnet.json">

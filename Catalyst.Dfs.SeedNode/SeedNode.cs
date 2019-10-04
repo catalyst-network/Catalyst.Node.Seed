@@ -22,14 +22,27 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Catalyst.Common.Interfaces;
-using Catalyst.Common.Interfaces.FileSystem;
-using Catalyst.Common.Interfaces.Modules.Consensus;
+using Autofac;
+using Autofac.Core;
+using Catalyst.Abstractions;
+using Catalyst.Abstractions.Consensus;
+using Catalyst.Abstractions.Cryptography;
+using Catalyst.Abstractions.FileSystem;
+using Catalyst.Abstractions.P2P;
+using Catalyst.Core.Modules.Dfs;
+using Catalyst.Core.Lib.Registry;
+using Catalyst.Abstractions.Cli;
+using Catalyst.Core.Lib;
+using Catalyst.Core.Lib.FileSystem;
+using Catalyst.Core.Lib.Cli;
+using Catalyst.Core.Lib.Cryptography;
 using Ipfs.CoreApi;
 using Serilog;
+using Catalyst.Core.Lib.P2P;
 
 namespace Catalyst.Dfs.SeedNode
 {
@@ -84,6 +97,22 @@ namespace Catalyst.Dfs.SeedNode
         public Task StartSockets()
         {
             return Task.CompletedTask;
+        }
+
+        public static void RegisterNodeDependencies(ContainerBuilder containerBuilder)
+        {
+            containerBuilder.RegisterType<SeedNode>().As<ICatalystNode>();
+            containerBuilder.RegisterType<PasswordManager>().As<IPasswordManager>();
+
+            containerBuilder.RegisterType<PasswordRegistry>().As<IPasswordRegistry>();
+            containerBuilder.RegisterType<ConsolePasswordReader>().As<IPasswordReader>();
+            containerBuilder.RegisterType<ConsoleUserOutput>().As<IUserOutput>();
+            containerBuilder.RegisterType<ConsoleUserInput>().As<IUserInput>();
+            containerBuilder.RegisterType<FileSystem>().As<IFileSystem>();
+            containerBuilder.RegisterType<PeerSettings>().As<IPeerSettings>();
+
+            containerBuilder.RegisterModule(new CoreLibProvider());
+            containerBuilder.RegisterModule(new DfsModule());
         }
     }
 }

@@ -5,11 +5,9 @@ VisualStudioVersion = 16.0.29123.88
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalyst.Dfs.SeedNode", "Catalyst.Dfs.SeedNode.csproj", "{9376F5C3-3F3D-41FF-AC42-3E98847DB1B1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalyst.Common", "..\Catalyst.Node\src\Catalyst.Common\Catalyst.Common.csproj", "{7251EBED-443A-43C0-92CF-4A7D36ECBE55}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalyst.Core.Lib", "..\Catalyst.Node\src\Catalyst.Core.Lib\Catalyst.Core.Lib.csproj", "{61942552-9BF5-4B72-AACB-79E34099CF65}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalyst.Node.Rpc.Client", "..\Catalyst.Node\src\Catalyst.Node.Rpc.Client\Catalyst.Node.Rpc.Client.csproj", "{90477B3B-9FE0-456E-AF5E-14A7F411A22D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalyst.Core.Modules.Dfs", "..\Catalyst.Node\src\Catalyst.Core.Modules.Dfs\Catalyst.Core.Modules.Dfs.csproj", "{9131F53F-1AF1-4569-B442-33D58E3B587B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,22 +19,14 @@ Global
 		{9376F5C3-3F3D-41FF-AC42-3E98847DB1B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9376F5C3-3F3D-41FF-AC42-3E98847DB1B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9376F5C3-3F3D-41FF-AC42-3E98847DB1B1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C4D751B7-DBF7-4C45-8D54-1FF6608E4EF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4D751B7-DBF7-4C45-8D54-1FF6608E4EF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C4D751B7-DBF7-4C45-8D54-1FF6608E4EF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C4D751B7-DBF7-4C45-8D54-1FF6608E4EF6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7251EBED-443A-43C0-92CF-4A7D36ECBE55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7251EBED-443A-43C0-92CF-4A7D36ECBE55}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7251EBED-443A-43C0-92CF-4A7D36ECBE55}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7251EBED-443A-43C0-92CF-4A7D36ECBE55}.Release|Any CPU.Build.0 = Release|Any CPU
 		{61942552-9BF5-4B72-AACB-79E34099CF65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{61942552-9BF5-4B72-AACB-79E34099CF65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61942552-9BF5-4B72-AACB-79E34099CF65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61942552-9BF5-4B72-AACB-79E34099CF65}.Release|Any CPU.Build.0 = Release|Any CPU
-		{90477B3B-9FE0-456E-AF5E-14A7F411A22D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{90477B3B-9FE0-456E-AF5E-14A7F411A22D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{90477B3B-9FE0-456E-AF5E-14A7F411A22D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{90477B3B-9FE0-456E-AF5E-14A7F411A22D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9131F53F-1AF1-4569-B442-33D58E3B587B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9131F53F-1AF1-4569-B442-33D58E3B587B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9131F53F-1AF1-4569-B442-33D58E3B587B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9131F53F-1AF1-4569-B442-33D58E3B587B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
