@@ -22,25 +22,12 @@
 #endregion
 
 using System;
-using System.IO;
-using System.Reflection;
-using System.Security;
 using System.Threading;
 using Autofac;
-using Autofac.Configuration;
-using Autofac.Extensions.DependencyInjection;
-using AutofacSerilogIntegration;
-using Catalyst.Common.Config;
-using Catalyst.Common.Kernel;
-using Catalyst.Common.Types;
-using Catalyst.Common.FileSystem;
-using Catalyst.Common.Interfaces;
-using Catalyst.Common.Interfaces.Registry;
-using Catalyst.Common.Util;
+using Catalyst.Abstractions;
+using Catalyst.Abstractions.Types;
+using Catalyst.Core.Lib.Kernel;
 using CommandLine;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Serilog;
 
 namespace Catalyst.Dfs.SeedNode
 {
@@ -90,15 +77,15 @@ namespace Catalyst.Dfs.SeedNode
         {
             _options = options;
             
-            try {
+            try
+            {
 
                 Kernel.WithDataDirectory()
                     .WithSerilogConfigFile()
                     .WithConfigCopier(new SeedNodeConfigCopier())
-                    .WithConfigurationFile("seed.components.json")
                     .BuildKernel(options.OverwriteConfig)
                     .WithPassword(PasswordRegistryTypes.IpfsPassword, options.IpfsPassword)
-                    .StartNode();
+                    .StartCustomAsync(CustomStartRegistration);
 
                 Environment.ExitCode = 0;
             }
@@ -109,5 +96,13 @@ namespace Catalyst.Dfs.SeedNode
             }
         }
 
+        private static async System.Threading.Tasks.Task CustomStartRegistration(Kernel kernel)
+        {
+            SeedNode.RegisterNodeDependencies(Kernel.ContainerBuilder);
+
+            kernel.StartContainer();
+            await kernel.Instance.Resolve<ICatalystNode>()
+                .RunAsync(new CancellationToken());
+        }
     }
 }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
+using System.Threading.Tasks;
 using Makaretu.Dns.Resolving;
 
 namespace Catalyst.Dfs.SeedNode
@@ -75,7 +76,7 @@ namespace Catalyst.Dfs.SeedNode
                 var endPoint = new IPEndPoint(address, Port);
                 var listener = new UdpClient(endPoint);
                 listeners.Add(listener);
-                ReadRequests(listener);
+                ReadRequestsAsync(listener);
             }
 
             Log.Information("started DNS server");
@@ -102,7 +103,7 @@ namespace Catalyst.Dfs.SeedNode
             listeners.Clear();
         }
 
-        async void ReadRequests(UdpClient listener)
+        private async Task ReadRequestsAsync(UdpClient listener)
         {
             Log.Information($"Listening on {listener.Client.LocalEndPoint}");
 
@@ -111,7 +112,7 @@ namespace Catalyst.Dfs.SeedNode
                 try
                 {
                     var request = await listener.ReceiveAsync().ConfigureAwait(false);
-                    Process(request, listener);
+                    ProcessAsync(request, listener);
                 }
                 catch (ObjectDisposedException)
                 {
@@ -128,7 +129,7 @@ namespace Catalyst.Dfs.SeedNode
             }
         }
 
-        async void Process(UdpReceiveResult request, UdpClient listener)
+        private async Task ProcessAsync(UdpReceiveResult request, UdpClient listener)
         {
             try
             {
