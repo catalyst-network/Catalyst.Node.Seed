@@ -42,7 +42,7 @@ using Serilog;
 using Catalyst.Core.Lib.P2P;
 using TheDotNetLeague.Ipfs.Core.Lib;
 
-namespace Catalyst.Dfs.SeedNode
+namespace Catalyst.Node.Dfs
 {
     /// <summary>
     ///   An IPFS seed node.

@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29123.88
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalyst.Dfs.SeedNode", "Catalyst.Dfs.SeedNode.csproj", "{9376F5C3-3F3D-41FF-AC42-3E98847DB1B1}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalyst.Framework", "Catalyst.Framework", "{DE4CCDEF-4BB1-4FDD-9D3A-5ED0721F2D51}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalyst.Abstractions", "..\submodules\Catalyst.Framework\src\Catalyst.Abstractions\Catalyst.Abstractions.csproj", "{B14CF3A3-2132-4B11-A9A7-1C90D2058444}"
@@ -59,7 +57,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nethermind.Core", "..\submo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{776D83E0-6118-425A-96B8-A1443610FF6F}"
 ProjectSection(SolutionItems) = preProject
-	Catalyst.Dfs.SeedNode.snk = Catalyst.Dfs.SeedNode.snk
+	Catalyst.Node.Dfs.snk = Catalyst.Node.Dfs.snk
 	..\Common.TestProjects.props = ..\Common.TestProjects.props
 	..\Common.Projects.props = ..\Common.Projects.props
 	..\Common.Packable.props = ..\Common.Packable.props
@@ -83,10 +81,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9376F5C3-3F3D-41FF-AC42-3E98847DB1B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9376F5C3-3F3D-41FF-AC42-3E98847DB1B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9376F5C3-3F3D-41FF-AC42-3E98847DB1B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9376F5C3-3F3D-41FF-AC42-3E98847DB1B1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B14CF3A3-2132-4B11-A9A7-1C90D2058444}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B14CF3A3-2132-4B11-A9A7-1C90D2058444}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B14CF3A3-2132-4B11-A9A7-1C90D2058444}.Release|Any CPU.ActiveCfg = Release|Any CPU

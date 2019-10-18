@@ -29,7 +29,7 @@ using Catalyst.Abstractions.Types;
 using Catalyst.Core.Lib.Kernel;
 using CommandLine;
 
-namespace Catalyst.Dfs.SeedNode
+namespace Catalyst.Node.Dfs
 {
     class Options
     {
