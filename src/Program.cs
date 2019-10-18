@@ -85,7 +85,7 @@ namespace Catalyst.Dfs.SeedNode
                     .WithConfigCopier(new SeedNodeConfigCopier())
                     .BuildKernel(options.OverwriteConfig)
                     .WithPassword(PasswordRegistryTypes.IpfsPassword, options.IpfsPassword)
-                    .StartCustom(CustomStartRegistration);
+                    .StartCustomAsync(CustomStartRegistration);
 
                 Environment.ExitCode = 0;
             }
@@ -96,14 +96,13 @@ namespace Catalyst.Dfs.SeedNode
             }
         }
 
-        private static void CustomStartRegistration(Kernel kernel)
+        private static async System.Threading.Tasks.Task CustomStartRegistration(Kernel kernel)
         {
             SeedNode.RegisterNodeDependencies(Kernel.ContainerBuilder);
 
             kernel.StartContainer();
-            kernel.Instance.Resolve<ICatalystNode>()
-                .RunAsync(new CancellationToken())
-                .Wait();
+            await kernel.Instance.Resolve<ICatalystNode>()
+                .RunAsync(new CancellationToken());
         }
     }
 }

@@ -1,61 +1,55 @@
 version: '3'
 
 networks:
-  seedNet:
+  devNet:
     ipam:
       config:
-        - subnet: 172.26.0.0/24
-
+        - subnet: 172.36.0.0/24
+          
 services:
 
-  dfs-seed-node-1:
+  seedDns:
+    image: samuelcolvin/dnserver
+    networks:
+      devNet:
+        ipv4_address: 172.36.0.101    
+    ports:
+      - "53/udp"
+    volumes:
+      - ./devnet_dnszone.txt:/zones/zones.txt
+      
+  node-1:
+    stdin_open: true
+    tty: true    
+    hostname: node-1
+    image: catalyst.network/catalyst.node:latest
+    networks:
+      devNet:
+        ipv4_address: 172.36.0.110
+  
+  node-2:
+    stdin_open: true
+    tty: true    
+    hostname: node-2
+    image: catalyst.network/catalyst.node:latest
+    networks:
+      devNet:
+        ipv4_address: 172.36.0.120
+  
+  node-3:
     stdin_open: true
     tty: true
-    hostname: dfs-seed-node-1
-    image: catalyst.network/catalyst.dfs.seednode:latest
-    ports:
-      - 4001
-      - 5001
-      - 53/udp
+    hostname: node-3
+    image: catalyst.network/catalyst.node:latest
     networks:
-      seedNet:
-        ipv4_address: 172.26.0.110
-        
-  dfs-seed-node-2:
+      devNet:
+        ipv4_address: 172.36.0.130
+
+  node-4:
     stdin_open: true
-    tty: true
-    hostname: dfs-seed-node-2
-    image: catalyst.network/catalyst.dfs.seednode:latest
-    ports:
-      - 4001
-      - 5001
-      - 53/udp
+    tty: true    
+    hostname: node-4
+    image: catalyst.network/catalyst.node:latest
     networks:
-      seedNet:
-        ipv4_address: 172.26.0.120
-        
-  dfs-seed-node-3:
-    stdin_open: true
-    tty: true
-    hostname: dfs-seed-node-3
-    image: catalyst.network/catalyst.dfs.seednode:latest
-    ports:
-      - 4001
-      - 5001
-      - 53/udp
-    networks:
-      seedNet:
-        ipv4_address: 172.26.0.130
-          
-  dfs-seed-node-4:
-    stdin_open: true
-    tty: true
-    hostname: dfs-seed-node-4
-    image: catalyst.network/catalyst.dfs.seednode:latest
-    ports:
-      - 4001
-      - 5001
-      - 53/udp
-    networks:
-      seedNet:
-        ipv4_address: 172.26.0.140
+      devNet:
+        ipv4_address: 172.36.0.140              

@@ -27,22 +27,20 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
-using Autofac.Core;
 using Catalyst.Abstractions;
 using Catalyst.Abstractions.Consensus;
 using Catalyst.Abstractions.Cryptography;
 using Catalyst.Abstractions.FileSystem;
 using Catalyst.Abstractions.P2P;
 using Catalyst.Core.Modules.Dfs;
-using Catalyst.Core.Lib.Registry;
 using Catalyst.Abstractions.Cli;
 using Catalyst.Core.Lib;
 using Catalyst.Core.Lib.FileSystem;
 using Catalyst.Core.Lib.Cli;
 using Catalyst.Core.Lib.Cryptography;
-using Ipfs.CoreApi;
 using Serilog;
 using Catalyst.Core.Lib.P2P;
+using TheDotNetLeague.Ipfs.Core.Lib;
 
 namespace Catalyst.Dfs.SeedNode
 {
