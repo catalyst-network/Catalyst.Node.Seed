@@ -1,15 +1,10 @@
-# Catalyst.Dfs.SeedNode
-Dfs Seed Node For Catalyst Network
+# Catalyst.Node.Seed
+Seed Node For Catalyst Network
 
 # Purpose
 
-## IPFS
-A seed node is a well known node that allows other 
-[IPFS nodes](https://richardschneider.github.io/net-ipfs-engine/articles/intro.html) to discover each other. In IPFS-speak this is 
-a bootstrap node.
-
-Catalyst uses an [IPFS private network](https://richardschneider.github.io/net-ipfs-engine/articles/pnet.html)
-that only allows communication among catalyst nodes.
+## Seeding
+A seed node is a well known node that allows other Nodes to discover each other. 
 
 ## DNS
 
@@ -34,7 +29,7 @@ seed.catalystnetwork    text =
 ```console
 > dotnet Catalyst.Dfs.SeedNode.dll --help
 Catalyst.Dfs.SeedNode 0.0.1
-Copyright © 2019 AtlasCity.io
+Copyright Â© 2019 AtlasCity.io
 
   -p, --ipfs-password    The password for IPFS.  Defaults to prompting for the password.
   --help                 Display this help screen.
