@@ -96,6 +96,15 @@ namespace Catalyst.Node.Dfs
         {
             return Task.CompletedTask;
         }
+    }
+}
+
+        }
+
+        public Task StartSockets()
+        {
+            return Task.CompletedTask;
+        }
 
         public static void RegisterNodeDependencies(ContainerBuilder containerBuilder)
         {
@@ -108,8 +117,7 @@ namespace Catalyst.Node.Dfs
             containerBuilder.RegisterType<ConsoleUserInput>().As<IUserInput>();
             containerBuilder.RegisterType<FileSystem>().As<IFileSystem>();
             containerBuilder.RegisterType<PeerSettings>().As<IPeerSettings>();
+
             containerBuilder.RegisterModule(new CoreLibProvider());
             containerBuilder.RegisterModule(new DfsModule());
         }
-    }
-}
