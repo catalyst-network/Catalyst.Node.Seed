@@ -42,7 +42,7 @@ using Serilog;
 using Catalyst.Core.Lib.P2P;
 using TheDotNetLeague.Ipfs.Core.Lib;
 
-namespace Catalyst.Dfs.SeedNode
+namespace Catalyst.Node.Dfs
 {
     /// <summary>
     ///   An IPFS seed node.
@@ -73,7 +73,7 @@ namespace Catalyst.Dfs.SeedNode
             var dns = new UdpDnsServer(zone);
             dns.Start();
 
-            // Start the IPFS seed node, which is just a normal IPFS peer node.;
+            // Start the seed node, which is just a normal peer node.;
             var peer = await _ipfs.Generic.IdAsync();
             _logger.Information($"seed node {peer.Id}");
             foreach (var addr in peer.Addresses)
@@ -108,7 +108,6 @@ namespace Catalyst.Dfs.SeedNode
             containerBuilder.RegisterType<ConsoleUserInput>().As<IUserInput>();
             containerBuilder.RegisterType<FileSystem>().As<IFileSystem>();
             containerBuilder.RegisterType<PeerSettings>().As<IPeerSettings>();
-
             containerBuilder.RegisterModule(new CoreLibProvider());
             containerBuilder.RegisterModule(new DfsModule());
         }

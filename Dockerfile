@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2 AS build-env
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build-env
 
 WORKDIR /opt
 COPY ./ ./
@@ -9,10 +9,10 @@ RUN dotnet restore
 # Copy everything else and build
 WORKDIR /opt
 COPY . ./
-RUN dotnet publish src/Catalyst.Node/Catalyst.Node.csproj -c Debug -o output
+RUN dotnet publish src/Catalyst.Node.csproj -c Debug -o output
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/core/sdk:2.2
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0
 
 WORKDIR /opt
 

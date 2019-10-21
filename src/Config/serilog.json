@@ -11,7 +11,7 @@
     ],
     "Enrich": [ "FromLogContext", "WithMachineName", "WithThreadId", "SourceContext" ],
     "Properties": {
-      "Application": "Catalyst.Dfs.SeedNode"
+      "Application": "Catalyst.Node.Dfs"
     }
   }
 }

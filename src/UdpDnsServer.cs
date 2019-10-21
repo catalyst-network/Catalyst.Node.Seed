@@ -9,7 +9,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Makaretu.Dns.Resolving;
 
-namespace Catalyst.Dfs.SeedNode
+namespace Catalyst.Node.Dfs
 {
     /// <summary>
     ///   A DNS name server.
