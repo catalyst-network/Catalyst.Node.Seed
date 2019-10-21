@@ -73,7 +73,7 @@ namespace Catalyst.Node.Dfs
             var dns = new UdpDnsServer(zone);
             dns.Start();
 
-            // Start the IPFS seed node, which is just a normal IPFS peer node.;
+            // Start the seed node, which is just a normal peer node.;
             var peer = await _ipfs.Generic.IdAsync();
             _logger.Information($"seed node {peer.Id}");
             foreach (var addr in peer.Addresses)
@@ -108,7 +108,6 @@ namespace Catalyst.Node.Dfs
             containerBuilder.RegisterType<ConsoleUserInput>().As<IUserInput>();
             containerBuilder.RegisterType<FileSystem>().As<IFileSystem>();
             containerBuilder.RegisterType<PeerSettings>().As<IPeerSettings>();
-
             containerBuilder.RegisterModule(new CoreLibProvider());
             containerBuilder.RegisterModule(new DfsModule());
         }
