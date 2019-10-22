@@ -22,27 +22,26 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using Catalyst.Abstractions;
+using Catalyst.Abstractions.Cli;
 using Catalyst.Abstractions.Consensus;
 using Catalyst.Abstractions.Cryptography;
 using Catalyst.Abstractions.FileSystem;
 using Catalyst.Abstractions.P2P;
-using Catalyst.Core.Modules.Dfs;
-using Catalyst.Abstractions.Cli;
 using Catalyst.Core.Lib;
-using Catalyst.Core.Lib.FileSystem;
 using Catalyst.Core.Lib.Cli;
 using Catalyst.Core.Lib.Cryptography;
-using Serilog;
+using Catalyst.Core.Lib.FileSystem;
 using Catalyst.Core.Lib.P2P;
+using Catalyst.Core.Modules.Dfs;
+using Serilog;
 using TheDotNetLeague.Ipfs.Core.Lib;
 
-namespace Catalyst.Node.Dfs
+namespace Catalyst.Node.Seed
 {
     /// <summary>
     ///   An IPFS seed node.
@@ -96,15 +95,6 @@ namespace Catalyst.Node.Dfs
         {
             return Task.CompletedTask;
         }
-    }
-}
-
-        }
-
-        public Task StartSockets()
-        {
-            return Task.CompletedTask;
-        }
 
         public static void RegisterNodeDependencies(ContainerBuilder containerBuilder)
         {
@@ -121,3 +111,5 @@ namespace Catalyst.Node.Dfs
             containerBuilder.RegisterModule(new CoreLibProvider());
             containerBuilder.RegisterModule(new DfsModule());
         }
+    }
+}
