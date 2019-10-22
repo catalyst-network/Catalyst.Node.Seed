@@ -29,36 +29,33 @@ using Autofac;
 using Catalyst.Abstractions;
 using Catalyst.Abstractions.Cli;
 using Catalyst.Abstractions.Consensus;
-using Catalyst.Abstractions.Cryptography;
+using Catalyst.Abstractions.Dfs;
 using Catalyst.Abstractions.FileSystem;
-using Catalyst.Abstractions.P2P;
 using Catalyst.Core.Lib;
 using Catalyst.Core.Lib.Cli;
-using Catalyst.Core.Lib.Cryptography;
-using Catalyst.Core.Lib.FileSystem;
-using Catalyst.Core.Lib.P2P;
 using Catalyst.Core.Modules.Dfs;
 using Serilog;
-using TheDotNetLeague.Ipfs.Core.Lib;
+
+//using TheDotNetLeague.Ipfs.Core.Lib;
 
 namespace Catalyst.Node.Seed
 {
     /// <summary>
-    ///   An IPFS seed node.
+    ///   A Catalyst seed node.
     /// </summary>
     public class SeedNode
         : ICatalystNode
     {
         private readonly ILogger _logger;
-        private readonly ICoreApi _ipfs;
+        private readonly IIpfsAdapter _dfs;
         private readonly IFileSystem _fileSystem;
 
         public SeedNode(
-            ICoreApi ipfs,
+            IIpfsAdapter dfs,
             IFileSystem fileSystem,
             ILogger logger)
         {
-            _ipfs = ipfs;
+            _dfs = dfs;
             _fileSystem = fileSystem;
             _logger = logger;
         }
@@ -73,7 +70,7 @@ namespace Catalyst.Node.Seed
             dns.Start();
 
             // Start the seed node, which is just a normal peer node.;
-            var peer = await _ipfs.Generic.IdAsync();
+            var peer = await _dfs.Generic.IdAsync();
             _logger.Information($"seed node {peer.Id}");
             foreach (var addr in peer.Addresses)
             {
@@ -98,18 +95,11 @@ namespace Catalyst.Node.Seed
 
         public static void RegisterNodeDependencies(ContainerBuilder containerBuilder)
         {
-            containerBuilder.RegisterType<SeedNode>().As<ICatalystNode>();
-            containerBuilder.RegisterType<PasswordManager>().As<IPasswordManager>();
-
-            containerBuilder.RegisterType<PasswordRegistry>().As<IPasswordRegistry>();
-            containerBuilder.RegisterType<ConsolePasswordReader>().As<IPasswordReader>();
-            containerBuilder.RegisterType<ConsoleUserOutput>().As<IUserOutput>();
-            containerBuilder.RegisterType<ConsoleUserInput>().As<IUserInput>();
-            containerBuilder.RegisterType<FileSystem>().As<IFileSystem>();
-            containerBuilder.RegisterType<PeerSettings>().As<IPeerSettings>();
-
             containerBuilder.RegisterModule(new CoreLibProvider());
             containerBuilder.RegisterModule(new DfsModule());
+            containerBuilder.RegisterType<ConsoleUserOutput>().As<IUserOutput>();
+            containerBuilder.RegisterType<ConsoleUserInput>().As<IUserInput>();
+            containerBuilder.RegisterType<SeedNode>().As<ICatalystNode>();
         }
     }
 }

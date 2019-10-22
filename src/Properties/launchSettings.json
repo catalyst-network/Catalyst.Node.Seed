@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Catalyst.Node.Dfs": {
+    "Catalyst.Node.Seed": {
       "commandName": "Project"
     }
   }

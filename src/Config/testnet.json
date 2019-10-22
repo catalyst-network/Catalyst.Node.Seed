@@ -1,19 +1,11 @@
 {
     "CatalystNodeConfiguration": {
-        "Consensus": {
-            "nDepth": 100
-        },
-        "Contract": {
-            "StorageType": "Catalyst.Helpers.Ipfs"
-        },
         "Peer": {
-            "Network": "devnet",
-            "PayoutAddress": "Some_cool_payout_address",
-            "PublicKey": "32kssh5iflgk3jfmcjs03ldj4hfgs8gn",
-            "Announce": true,
-            "AnnounceServer": "127.0.0.1:21420",
-            "Port": 42054,
+            "Network": "Testnet",
+            "PublicKey": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "Port": 42076,
             "BindAddress": "127.0.0.1",
+            "PublicIpAddress": "127.0.0.1",
             "DnsServers": [
                 "127.0.0.1:5053"
             ],
@@ -27,9 +19,7 @@
         },
         "Rpc": {
             "BindAddress": "127.0.0.1",
-            "Port": 42051,
-            "MutualAuthentication": false,
-            "AcceptInvalidCerts": false,
+            "Port": 42066,
             "PfxFileName": "mycert.pfx"
         },
         "PersistenceConfiguration": {
@@ -38,10 +28,10 @@
                 "inMemory": {
                     "factory": "SharpRepository.InMemoryRepository.InMemoryConfigRepositoryFactory, SharpRepository.InMemoryRepository"
                 },
-                //"mongoDb": {
-                //  "factory": "SharpRepository.MongoDbRepository.MongoDbConfigRepositoryFactory, SharpRepository.MongoDbRepository",
-                //  "connectionString": "mongodb:://127.0.0.1"
-                //},
+                "mongoDb": {
+                    "factory": "SharpRepository.MongoDbRepository.MongoDbConfigRepositoryFactory, SharpRepository.MongoDbRepository",
+                    "connectionString": "mongodb:://127.0.0.1"
+                },
                 "inMemoryNoCaching": {
                     "factory": "SharpRepository.InMemoryRepository.InMemoryConfigRepositoryFactory, SharpRepository.InMemoryRepository",
                     "cachingStrategy": "none",
@@ -64,14 +54,6 @@
                     "generational": "true",
                     "writeThrough": "false"
                 },
-                //"redisProvider": {
-                //  "factory": "SharpRepository.Caching.Redis.RedisConfigCachingProviderFactory, SharpRepository.Caching.Redis",
-                //  "host": "127.0.0.1",
-                //  "port": "6379",
-                //  "ssl": false,
-                //  "password": "",
-                //  "defaultDatabase": "0"
-                //},
                 "timeout": {
                     "factory": "SharpRepository.Repository.Caching.TimeoutConfigCachingStrategyFactory, SharpRepository.Repository",
                     "timeout": "200"
