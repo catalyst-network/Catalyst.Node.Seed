@@ -1,15 +1,15 @@
-﻿using Serilog;
-using Makaretu.Dns;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.IO;
 using System.Threading.Tasks;
+using Makaretu.Dns;
 using Makaretu.Dns.Resolving;
+using Serilog;
 
-namespace Catalyst.Node.Dfs
+namespace Catalyst.Node.Seed
 {
     /// <summary>
     ///   A DNS name server.

@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using Catalyst.Core.Lib.Config;
 using Catalyst.Protocol.Network;
 
-namespace Catalyst.Node.Dfs
+namespace Catalyst.Node.Seed
 {
     public sealed class SeedNodeConfigCopier : ConfigCopier
     {

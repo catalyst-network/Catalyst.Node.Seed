@@ -9,7 +9,7 @@
         <OutputType>Exe</OutputType>
         <TargetFramework>netcoreapp3.0</TargetFramework>
         <SignAssembly>true</SignAssembly>
-        <AssemblyOriginatorKeyFile>Catalyst.Node.Dfs.snk</AssemblyOriginatorKeyFile>
+        <AssemblyOriginatorKeyFile>Catalyst.Node.Seed.snk</AssemblyOriginatorKeyFile>
         <PublicSign>true</PublicSign>
     </PropertyGroup>
 
