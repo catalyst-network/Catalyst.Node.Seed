@@ -1,3 +1,0 @@
-[submodule "Catalyst.Framework"]
-	path = submodules/Catalyst.Framework
-	url = git@github.com:catalyst-network/catalyst.framework.git
