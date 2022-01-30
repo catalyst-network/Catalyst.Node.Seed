@@ -12,7 +12,7 @@ COPY . ./
 RUN dotnet publish src/Catalyst.Node.csproj -c Debug -o output
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0
+FROM mcr.microsoft.com/dotnet/core/sdk:6.0
 
 WORKDIR /opt
 
